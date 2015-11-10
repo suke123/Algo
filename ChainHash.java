@@ -1,10 +1,11 @@
+//チェイン法によるハッシュ
 public class ChainHash<K,V> {
 
 	//---ハッシュを構成するノード---//
 	class Node<K,V> {
-		private K key;
-		private V data;
-		private Node<K,V> next;
+		private K key;              //キー値
+		private V data;             //データ
+		private Node<K,V> next;     //後続ノードへの参照
 
 		//---コンストラクタ---//
 		Node(K key, V data, Node<K,V> next) {
@@ -29,15 +30,15 @@ public class ChainHash<K,V> {
 		}
 	}
 
-	private int size;
-	private Node<K,V>[] table;
+	private int size;             //ハッシュ表の大きさ
+	private Node<K,V>[] table;    //ハッシュ表
 
 	//---コンストラクタ---//
 	public ChainHash(int capacity) {
 		try {
 			table = new Node[capacity];
 			this.size = capacity;
-		} catch (OutOfMemoryError e) {
+		} catch (OutOfMemoryError e) {        //表を生成できなかった
 			this.size = 0;
 		}
 	}
@@ -49,40 +50,40 @@ public class ChainHash<K,V> {
 
 	//---キー値keyをもつ要素の探索（データを返却）---//
 	public V search(K key) {
-		int hash = hashValue(key);
-		Node<K,V> p = table[hash];
+		int hash = hashValue(key);            //探索するデータのハッシュ値
+		Node<K,V> p = table[hash];            //着目ノード
 
 		while (p != null) {
 			if(p.getKey().equals(key))
-				return p.getValue();
-			p = p.next;
+				return p.getValue();  //探索成功
+			p = p.next;                   //後続ノードに着目
 		}
-		return null;
+		return null;                          //探索失敗
 	}
 
 	//---キー値key・データdataをもつ要素の追加---//
 	public int add(K key, V data) {
-		int hash = hashValue(key);
-		Node<K,V> p = table[hash];
+		int hash = hashValue(key);            //追加するデータのハッシュ値
+		Node<K,V> p = table[hash];            //着目ノード
 
 		while (p != null) {
-			if(p.getKey().equals(key))
+			if(p.getKey().equals(key))    //このキー値は登録済み
 				return 1;
-			p = p.next;
+			p = p.next;                   //後続ノードに着目
 		}
 		Node<K,V> temp = new Node<K,V>(key, data, table[hash]);
-		table[hash] = temp;
+		table[hash] = temp;                   //ノードを挿入
 		return 0;
 	}
 
 	//---キー値keyをもつ要素の削除---//
 	public int remove(K key) {
-		int hash = hashValue(key);
-		Node<K,V> p = table[hash];
-		Node<K,V> pp = null;
+		int hash = hashValue(key);            //削除するデータのハッシュ値
+		Node<K,V> p = table[hash];            //着目するノード
+		Node<K,V> pp = null;                  //前回の着目ノード
 
 		while (p != null) {
-			if(p.getKey().equals(key)) {
+			if(p.getKey().equals(key)) {   //見つけたら
 				if(pp == null)
 					table[hash] = p.next;
 				else
@@ -90,9 +91,9 @@ public class ChainHash<K,V> {
 				return 0;
 			}
 			pp = p;
-			p = p.next;
+			p = p.next;                     //後続ノードに着目
 		}
-		return 1;
+		return 1;                               //そのキー値は存在しない
 	}
 
 	//---ハッシュ表をダンプ---//
