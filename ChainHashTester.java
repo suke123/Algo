@@ -47,19 +47,19 @@ class ChainHashTester {
 		DUMP(     "全データ表示"),
 		TERMINATE("終了");
 
-		private final String message;
+		private final String message;           //表示用文字列
 
-		static Menu MenuAt(int idx){
+		static Menu MenuAt(int idx){            //序数がidxである列挙を返す
 			for(Menu m : Menu.values())
 				if(m.ordinal() == idx)
 					return m;
 				return null;
 		}
-		Menu(String string) {
+		Menu(String string) {                    //コンストラクタ
 			message = string;
 		}
 
-		String getMessage() {
+		String getMessage() {                    //表示用文字列を返す
 			return message;
 		}
 	}
@@ -81,26 +81,26 @@ class ChainHashTester {
 	}
 
 	public static void main(String[] args) {
-		Menu menu;
-		Data data;
-		Data temp = new Data();
+		Menu menu;                      //メニュー
+		Data data;                      //追加用データ参照
+		Data temp = new Data();         //読み込み用データ
 
 		ChainHash<Integer, Data> hash = new ChainHash<Integer, Data>(13);
 
 		do {
 			switch (menu = SelectMenu()) {
-			  case ADD :
+			  case ADD :                                         //追加
 				data = new Data();
 				data.scanData("追加", Data.NO | Data.NAME);
 				hash.add(data.keyCode(), data);
 				break;
 
-			  case REMOVE :
+			  case REMOVE :                                      //削除
 				temp.scanData("削除", Data.NO);
 				hash.remove(temp.keyCode());
 				break;
 
-			  case SEARCH :
+			  case SEARCH :                                      //探索
 				temp.scanData("探索", Data.NO);
 				Data t = hash.search(temp.keyCode());
 				if(t != null)
@@ -109,7 +109,7 @@ class ChainHashTester {
 					System.out.println("該当するデータはありません。");
 				break;
 
-			  case DUMP :
+			  case DUMP :                                         //表示
 				hash.dump();
 				break;
 			}
