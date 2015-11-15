@@ -119,4 +119,22 @@ public class OpenHash<K,V> {
 		p.setStat(Status.DELETED);
 		return 0;
 	}
+	
+	//---ハッシュ表をダンプ---//
+	public void dump() {
+		for(int i = 0; i < size; i++) {
+			System.out.printf("%02d ", i);
+			switch (table[i].stat) {
+				case OCCUPIED :
+					System.out.printf("%s (%s)\n", table[i].getKey(), table[i].getValue());
+					break;
+					
+				case EMPTY :
+					System.out.println("--未登録--"); break;
+					
+				case DELETED :
+					System.out.println("--削除済--"); break;
+			}
+		}
+	}
 }
