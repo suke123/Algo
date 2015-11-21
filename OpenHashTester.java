@@ -85,14 +85,20 @@ class ChainHashTester {
 		Data data;
 		Data temp = new Data();
 
-		ChainHash<Integer, Data> hash = new ChainHash<Integer, Data>(13);
+		OpenHash<Integer, Data> hash = new OpenHash<Integer, Data>(13);
 
 		do {
 			switch (menu = SelectMenu()) {
 			  case ADD :
 				data = new Data();
 				data.scanData("追加", Data.NO | Data.NAME);
-				hash.add(data.keyCode(), data);
+				int k = hash.add(data.keyCode(), data);
+				switch (k) {
+				 case 1 : System.out.println("そのキー値は登録済みです。");
+				          break;
+				 case 2 : System.out.println("ハッシュ表が満杯です。");
+				          break;
+				}
 				break;
 
 			  case REMOVE :
