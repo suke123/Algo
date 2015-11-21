@@ -70,7 +70,7 @@ public class OpenHash<K,V> {
 	}
 
 	//---キー値keyをもつバケットを探索---//
-	private Bucket<K,V> serchNode(K key) {
+	private Bucket<K,V> searchNode(K key) {
 		int hash = hashValue(key);            //探索するデータのハッシュ値
 		Bucket<K,V> p = table[hash];          //着目バケット
 
@@ -84,8 +84,8 @@ public class OpenHash<K,V> {
 	}
 
 	//---キー値keyをもつ要素の探索（データを返却）---//
-	public V serach(K key) {
-		Bucket<K,V> p = serachNode(key);
+	public V search(K key) {
+		Bucket<K,V> p = searchNode(key);
 		if(p != null)
 			return p.getValue();
 		else
@@ -119,22 +119,22 @@ public class OpenHash<K,V> {
 		p.setStat(Status.DELETED);
 		return 0;
 	}
-	
+
 	//---ハッシュ表をダンプ---//
-	public void dump() {
-		for(int i = 0; i < size; i++) {
-			System.out.printf("%02d ", i);
-			switch (table[i].stat) {
-				case OCCUPIED :
-					System.out.printf("%s (%s)\n", table[i].getKey(), table[i].getValue());
-					break;
-					
-				case EMPTY :
-					System.out.println("--未登録--"); break;
-					
-				case DELETED :
-					System.out.println("--削除済--"); break;
+		public void dump() {
+			for(int i = 0; i < size; i++) {
+				System.out.printf("%02d ", i);
+				switch (table[i].stat) {
+					case OCCUPIED :
+						System.out.printf("%s (%s)\n", table[i].getKey(), table[i].getValue());
+						break;
+
+					case EMPTY :
+						System.out.println("--未登録--"); break;
+
+					case DELETED :
+						System.out.println("--削除済--"); break;
+				}
 			}
 		}
-	}
 }
