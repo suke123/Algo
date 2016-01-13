@@ -2,7 +2,7 @@
 import java.util.TreeMap;
 public class TreeMapSample {
 	public static void main(String[] args){
-		// Mapの実装であるHashMapクラスのインスタンス生成，今回はキーも値も文字列型
+		// Mapの実装であるTreeMapクラスのインスタンス生成，今回はキーも値も文字列型
 		// ジェネリクス（総称型）を使っている（復習）
 		TreeMap<String,String> map = new TreeMap<String,String>();
 		map.put("red","赤"); // 要素の追加
